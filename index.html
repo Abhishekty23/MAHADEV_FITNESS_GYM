@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mahadev Fitness Gym</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #111;
+        margin: 0;
+        color: #fff;
+      }
+      header {
+        background: #000;
+        text-align: center;
+        padding: 20px;
+      }
+      header img {
+        height: 80px;
+      }
+      h1 {
+        margin: 10px 0;
+        color: #f39c12;
+      }
+      .date-time {
+        font-size: 18px;
+        color: #fff;
+        font-weight: bold;
+        background: #333;
+        padding: 10px;
+        border-radius: 8px;
+        margin-top: 20px;
+        width: 100%;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      .container {
+        max-width: 1000px;
+        margin: auto;
+        padding: 20px;
+      }
+      .section {
+        background: #222;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 10px;
+      }
+      input,
+      select,
+      button {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+      input,
+      select {
+        background: #333;
+        color: white;
+      }
+      button {
+        background: #f39c12;
+        font-weight: bold;
+        color: black;
+        cursor: pointer;
+      }
+      button:hover {
+        opacity: 0.9;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        background: #111;
+        color: white;
+      }
+      th,
+      td {
+        border: 1px solid #444;
+        padding: 10px;
+        text-align: left;
+      }
+      th {
+        background: #f39c12;
+        color: black;
+      }
+      .profile-popup {
+        display: none;
+        position: fixed;
+        top: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #222;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        z-index: 1000;
+        width: 80%;
+        max-width: 400px;
+      }
+      .profile-popup h3 {
+        color: #f39c12;
+      }
+      .profile-popup p {
+        margin: 5px 0;
+      }
+      .close-btn {
+        background: #f39c12;
+        color: black;
+        font-weight: bold;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        float: right;
+        cursor: pointer;
+      }
+      .scrollable-table {
+        max-height: 300px;
+        overflow-y: auto;
+        margin-top: 10px;
+      }
+
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      .login-form {
+        background: #222;
+        padding: 40px;
+        border-radius: 10px;
+        width: 350px;
+        text-align: center;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+      }
+
+      .login-form h1 {
+        margin-bottom: 20px;
+        color: #f39c12;
+        font-size: 2rem;
+        font-weight: 650;
+      }
+
+      .login-form p {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #f39c12;
+        font-family: "Poppins", cursive;
+        margin-bottom: 20px;
+      }
+
+      .login-form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        background: #333;
+        color: #fff;
+        border: 2px solid #444;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      .login-form button {
+        width: 100%;
+        padding: 12px;
+        background: #f39c12;
+        color: black;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+
+      .login-form button:hover {
+        background: #e67e22;
+      }
+
+      .login-form input:focus,
+      .login-form button:focus {
+        outline: none;
+        border-color: #f39c12;
+      }
+
+      .login-form img {
+        height: 80px;
+        margin-bottom: 20px;
+      }
+
+      .login-form small {
+        font-size: 0.8rem;
+        color: #aaa;
+      }
+
+      .login-form small a {
+        color: #f39c12;
+        text-decoration: none;
+      }
+
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: #111;
+      }
+      .login-form {
+        background: #222;
+        padding: 40px;
+        border-radius: 10px;
+        width: 400px;
+        text-align: center;
+      }
+      .login-form h1 {
+        margin-bottom: 20px;
+        color: #f39c12;
+      }
+      .login-form input {
+        margin-bottom: 20px;
+      }
+      .logged-in {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loginPage" class="login-container">
+      <div class="login-form">
+        <img src="logo.png" alt="Logo" />
+        <h1>MAHADEV FITNESS GYM</h1>
+        <p
+          style="
+         margin-top: 5px;
+          font-size: 1.3rem;
+          font-weight: 600;
+          color: #f39c12;
+          font-family: 'Poppins', cursive;
+         
+          "
+        >
+          <em>"Har Har Mahadev"</em>
+        </p>
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
+        <button onclick="login()">Login</button>
+      </div>
+    </div>
+    <div id="mainContent" class="container logged-in"></div>
+    <header>
+      <img src="logo.png" alt="Logo" />
+      <h1>MAHADEV FITNESS GYM</h1>
+      <p
+        style="
+          margin-top: 5px;
+          font-size: 1.3rem;
+          font-weight: 600;
+          color: #f39c12;
+          font-family: 'Poppins', cursive;
+          text-shadow: 2px 2px 5px #000;
+        "
+      >
+        <em>"Har Har Mahadev"</em>
+      </p>
+    </header>
+
+    <div class="date-time">
+      <p id="currentDateTime"></p>
+    </div>
+
+    <div class="container">
+      <div class="section">
+        <h2>Fast Attendance</h2>
+        <input type="text" id="qrName" placeholder="Enter Your Full Name..." />
+        <button onclick="fastAttendance()">Fast Attendance</button>
+      </div>
+
+      <div class="section">
+        <h2>Member Stats</h2>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap">
+          <div
+            style="flex: 1; background: #333; padding: 20px; border-radius: 8px"
+          >
+            <h3>Total Members</h3>
+            <p id="totalMembers" style="font-size: 24px; font-weight: bold">
+              0
+            </p>
+          </div>
+          <div
+            style="flex: 1; background: #333; padding: 20px; border-radius: 8px"
+          >
+            <h3>Total Logs</h3>
+            <p id="totalLogs" style="font-size: 24px; font-weight: bold">0</p>
+          </div>
+          <div
+            style="flex: 1; background: #333; padding: 20px; border-radius: 8px"
+          >
+            <h3>Present Today</h3>
+            <p id="presentToday" style="font-size: 24px; font-weight: bold">
+              0
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Add New Member</h2>
+        <form id="memberForm">
+          <input type="text" id="name" placeholder="Name" required />
+          <input type="text" id="gender" placeholder="Gender" required />
+          <input type="date" id="joinDate" required />
+          <input type="text" id="mobile" placeholder="Mobile No." required />
+          <select id="fees">
+            <option value="Paid">Paid</option>
+            <option value="Due">Due</option>
+          </select>
+          <input type="date" id="nextPayDate" required />
+          <button type="submit">Add Member</button>
+        </form>
+      </div>
+
+      <div class="section">
+        <h2>Search Member</h2>
+        <input
+          type="text"
+          id="search"
+          placeholder="Search by name or mobile..."
+        />
+        <div class="scrollable-table">
+          <table id="memberTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Join Date</th>
+                <th>Mobile</th>
+                <th>Fees</th>
+                <th>Next Payment</th>
+                <th>Entry Time</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Attendance Logs</h2>
+        <button onclick="resetLogs()">Reset Logs</button>
+        <button onclick="exportLogsData()">Export Logs</button>
+        <div class="scrollable-table">
+          <table id="logTable">
+            <thead>
+              <tr>
+                <th>Mobile</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Export Member Data</h2>
+        <button onclick="exportMembersData()">Export Data</button>
+      </div>
+    </div>
+
+    <div id="profilePopup" class="profile-popup">
+      <button class="close-btn" onclick="closeProfile()">X</button>
+      <h3>Edit Member Profile</h3>
+      <form id="editProfileForm">
+        <input type="text" id="editName" placeholder="Name" required />
+        <input type="text" id="editGender" placeholder="Gender" required />
+        <input type="date" id="editJoinDate" required />
+        <input type="text" id="editMobile" placeholder="Mobile No." required />
+        <select id="editFees">
+          <option value="Paid">Paid</option>
+          <option value="Due">Due</option>
+        </select>
+        <input type="date" id="editNextPayDate" required />
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+
+    <script>
+      // Handling Login
+      function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (username === "admin" && password === "1234") {
+          // Hide login page and show the main content
+          document.getElementById("loginPage").style.display = "none";
+          document.getElementById("mainContent").style.display = "block";
+        } else {
+          alert("Invalid username or password!");
+        }
+      }
+
+      // Handling Logout
+      function logout() {
+        document.getElementById("mainContent").style.display = "none";
+        document.getElementById("loginPage").style.display = "flex"; // Show login page again
+      }
+
+      let members = JSON.parse(localStorage.getItem("gymMembers") || "[]");
+      let logs = JSON.parse(localStorage.getItem("gymLogs") || "[]");
+
+      const form = document.getElementById("memberForm");
+      const tableBody = document.querySelector("#memberTable tbody");
+      const search = document.getElementById("search");
+      const logBody = document.querySelector("#logTable tbody");
+
+      function updateDateTime() {
+        const now = new Date();
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        };
+        const date = now.toLocaleDateString(undefined, options);
+        let hours = now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+        const ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12 || 12;
+        const time = `${hours}:${minutes < 10 ? "0" + minutes : minutes}:${
+          seconds < 10 ? "0" + seconds : seconds
+        } ${ampm}`;
+        document.getElementById(
+          "currentDateTime"
+        ).textContent = `${date} - ${time}`;
+      }
+
+      setInterval(updateDateTime, 1000);
+      updateDateTime();
+
+      function renderTable(data) {
+        tableBody.innerHTML = "";
+        data.forEach((m) => {
+          const row = `<tr>
+            <td>${m.name}</td>
+            <td>${m.gender}</td>
+            <td>${m.joinDate}</td>
+            <td>${m.mobile}</td>
+            <td>${m.fees}</td>
+            <td>${m.nextPayDate}</td>
+            <td>${m.entryTime || ""}</td>
+            <td><button onclick="editProfile('${m.mobile}')">Edit</button></td>
+          </tr>`;
+          tableBody.innerHTML += row;
+        });
+      }
+
+      function renderLogs() {
+        logBody.innerHTML = "";
+        logs
+          .slice()
+          .reverse()
+          .forEach((log, index) => {
+            const row = `<tr>
+              <td>${log.mobile}</td>
+              <td>${log.name}</td>
+              <td>${log.date}</td>
+              <td>${log.time}</td>
+              <td><button onclick="deleteLog(${
+                logs.length - 1 - index
+              })">Delete</button></td>
+            </tr>`;
+            logBody.innerHTML += row;
+          });
+      }
+
+      function updateStats() {
+        document.getElementById("totalMembers").textContent = members.length;
+        document.getElementById("totalLogs").textContent = logs.length;
+      }
+
+      function updatePresentToday() {
+        const today = new Date().toLocaleDateString();
+        const todayLogs = logs.filter((log) => log.date === today);
+        const uniqueMobiles = [...new Set(todayLogs.map((log) => log.mobile))];
+        document.getElementById("presentToday").textContent =
+          uniqueMobiles.length;
+      }
+
+      function fastAttendance() {
+        const name = document.getElementById("qrName").value;
+        if (name) {
+          const member = members.find(
+            (m) => m.name.toLowerCase() === name.toLowerCase()
+          );
+          const today = new Date().toLocaleDateString();
+          const existingLog = logs.find(
+            (log) =>
+              log.name.toLowerCase() === name.toLowerCase() &&
+              log.date === today
+          );
+
+          if (existingLog) {
+            alert(`${member.name} has already marked attendance today.`);
+          } else {
+            if (member) {
+              const now = new Date();
+              const time = now.toLocaleTimeString();
+              const date = now.toLocaleDateString();
+
+              member.entryTime = time;
+              logs.push({
+                mobile: member.mobile,
+                name: member.name,
+                date,
+                time,
+              });
+
+              localStorage.setItem("gymMembers", JSON.stringify(members));
+              localStorage.setItem("gymLogs", JSON.stringify(logs));
+
+              alert(`Fast Attendance marked for ${member.name}`);
+              renderTable(members);
+              renderLogs();
+              updateStats();
+              updatePresentToday(); // Fix update of "Present Today"
+            } else {
+              alert("Member not found.");
+            }
+          }
+        } else {
+          alert("Please enter a name.");
+        }
+      }
+
+      function deleteLog(index) {
+        logs.splice(index, 1);
+        localStorage.setItem("gymLogs", JSON.stringify(logs));
+        renderLogs();
+        updateStats();
+        updatePresentToday(); // Update "Present Today" after log deletion
+      }
+
+      function resetLogs() {
+        if (confirm("Are you sure you want to reset all attendance logs?")) {
+          logs = [];
+          localStorage.setItem("gymLogs", JSON.stringify(logs));
+          renderLogs();
+          updateStats();
+          updatePresentToday(); // Reset the "Present Today" count
+        }
+      }
+
+      function editProfile(mobile) {
+        const member = members.find((m) => m.mobile === mobile);
+        if (member) {
+          document.getElementById("editName").value = member.name;
+          document.getElementById("editGender").value = member.gender;
+          document.getElementById("editJoinDate").value = member.joinDate;
+          document.getElementById("editMobile").value = member.mobile;
+          document.getElementById("editFees").value = member.fees;
+          document.getElementById("editNextPayDate").value = member.nextPayDate;
+
+          document.getElementById("profilePopup").style.display = "block";
+
+          document.getElementById("editProfileForm").onsubmit = function (e) {
+            e.preventDefault();
+            member.name = document.getElementById("editName").value;
+            member.gender = document.getElementById("editGender").value;
+            member.joinDate = document.getElementById("editJoinDate").value;
+            member.mobile = document.getElementById("editMobile").value;
+            member.fees = document.getElementById("editFees").value;
+            member.nextPayDate =
+              document.getElementById("editNextPayDate").value;
+
+            localStorage.setItem("gymMembers", JSON.stringify(members));
+            document.getElementById("profilePopup").style.display = "none";
+            renderTable(members);
+          };
+        }
+      }
+
+      function closeProfile() {
+        document.getElementById("profilePopup").style.display = "none";
+      }
+
+      function exportMembersData() {
+        const membersData = members.map((member) => ({
+          Name: member.name,
+          Gender: member.gender,
+          "Join Date": member.joinDate,
+          "Mobile No.": member.mobile,
+          Fees: member.fees,
+          "Next Payment": member.nextPayDate,
+          "Last Entry": member.entryTime || "N/A",
+        }));
+
+        const csvContent =
+          "data:text/csv;charset=utf-8," +
+          Object.keys(membersData[0]).join(",") +
+          "\n" +
+          membersData.map((m) => Object.values(m).join(",")).join("\n");
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "members_data.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      function exportLogsData() {
+        const logsData = logs.map((log) => ({
+          Mobile: log.mobile,
+          Name: log.name,
+          Date: log.date,
+          Time: log.time,
+        }));
+
+        const csvContent =
+          "data:text/csv;charset=utf-8," +
+          Object.keys(logsData[0]).join(",") +
+          "\n" +
+          logsData.map((l) => Object.values(l).join(",")).join("\n");
+
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "attendance_logs.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      search.addEventListener("input", () => {
+        const term = search.value.toLowerCase();
+        const filtered = members.filter(
+          (m) => m.name.toLowerCase().includes(term) || m.mobile.includes(term)
+        );
+        renderTable(filtered);
+      });
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const now = new Date();
+        const time = now.toLocaleTimeString();
+        const mobile = document.getElementById("mobile").value;
+
+        const existingMember = members.find((m) => m.mobile === mobile);
+        if (existingMember) {
+          alert("Member with this mobile number already exists.");
+          return;
+        }
+
+        const newMember = {
+          name: document.getElementById("name").value,
+          gender: document.getElementById("gender").value,
+          joinDate: document.getElementById("joinDate").value,
+          mobile,
+          fees: document.getElementById("fees").value,
+          nextPayDate: document.getElementById("nextPayDate").value,
+          entryTime: time,
+        };
+        members.push(newMember);
+        localStorage.setItem("gymMembers", JSON.stringify(members));
+        renderTable(members);
+        updateStats();
+        form.reset();
+      });
+
+      renderTable(members);
+      renderLogs();
+      updateStats();
+      updatePresentToday(); // Initialize Present Today count
+    </script>
+
+    <footer
+      style="text-align: center; padding: 20px; font-size: 0.9rem; color: #aaa"
+    >
+      <p><em>"Made & Design by Abhishek Tyagi" © 2025</em></p>
+    </footer>
+  </body>
+</html>
